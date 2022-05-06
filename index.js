@@ -1,198 +1,191 @@
-// packages required for this application
-const fs = require("fs");
-const generateMarkdown = require("./utils/generateMarkdown.js");
+// TODO: Include packages needed for this application
+const { writeFile, copyFile } = require("./utils/generateFile.js");
 const inquirer = require("inquirer");
-const { resolve } = require("path");
+const generateMarkdown = require("./utils/generateMarkdown.js");
 
-// Array of questions for user input
-const questions = [
-  {
-    type: "input",
-    name: "name",
-    message:
-      "Welcome to the Professional README Generator, please enter your full name: ",
-    validate: (nameInput) => {
-      if (nameInput) {
-        return true;
-      } else {
-        console.log("Please enter a full name: ", nameInput);
-        return false;
-      }
-    },
-  },
-  {
-    type: "input",
-    name: "GitHub",
-    message: "Please enter your GitHub username: ",
-    validate: (githubInput) => {
-      if (githubInput) {
-        return true;
-      } else {
-        console.log("Please enter a GitHub link to your work! ");
-        return false;
-      }
-    },
-  },
-  {
-    type: "input ",
-    name: "email ",
-    message: "Please enter your email address: ",
-    validate: (emailInput) => {
-      if (emailInput) {
-        return true;
-      } else {
-        console.log(
-          "For questions, please provide a way for users to contact you. "
-        );
-        return false;
-      }
-    },
-  },
-  {
-    type: "input ",
-    name: "title",
-    message: "Please enter a title for your project? ",
-    validate: (titleInput) => {
-      if (titleInput) {
-        return true;
-      } else {
-        console.log("Your project must have a title!. ");
-        return false;
-      }
-    },
-  },
-  {
-    type: "input ",
-    name: "description ",
-    message: "Please enter your project description: ",
-    validate: (descriptionInput) => {
-      if (descriptionInput) {
-        return true;
-      } else {
-        console.log(
-          'It is essential to provide a description of your project. Not sure what to include? Head to the repo of this README generator and navigate to the section "Description: Questions to Consider" under the Guidelines header for some tips on writing a quality description.'
-        );
-        return false;
-      }
-    },
-  },
-  {
-    type: "input ",
-    name: "installation",
-    message: "What are the instructions for installation? ",
-    validate: (installationInput) => {
-      if (installationInput) {
-        return true;
-      } else {
-        console.log(
-          "Please provide instructions for installation to ensure users have the proper software to run your program!"
-        );
-        return false;
-      }
-    },
-  },
-  {
-    type: "input ",
-    name: "usage",
-    message: "Instructions for use: ",
-    validate: (usageInput) => {
-      if (usageInput) {
-        return true;
-      } else {
-        console.log(
-          "Providing instructions for use will help users navigate thru your project. Please do so. "
-        );
-        return false;
-      }
-    },
-  },
-  {
-    type: "input ",
-    name: "contributing ",
-    message: "How can others contribute to this project? ",
-    validate: (contributionInput) => {
-      if (contributionInput) {
-        return true;
-      } else {
-        console.log(
-          "Please provide instructions on how others can contribute to your project."
-        );
-        return false;
-      }
-    },
-  },
-  {
-    type: "input ",
-    name: "tests",
-    message:
-      "Please describe these tests written for your project an dhow to use them.",
-    validate: (testsInput) => {
-      if (testsInput) {
-        return true;
-      } else {
-        console.log(
-          "Please provide instructions on how others can contribute to your project."
-        );
-        return false;
-      }
-    },
-  },
-  {
-    type: "confirm",
-    name: "confirmLicenses",
-    message: "Would you like to include a license?",
-    default: false,
-  },
-  {
-    type: "list",
-    name: "licenses",
-    message: "What license would you like to include? ",
-    choices: ["MIT", "GPL", "CC--0"],
-    when: ({ confirmLicenses }) => {
-      if (confirmLicenses) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-  },
-];
+// TODO: Create an array of questions for user input
+const promptQuestions = () => {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "github",
+        message: "Enter your GitHub username? (Required)",
+        validate: (userInput) => {
+          if (userInput) {
+            return true;
+          } else {
+            console.log("Please enter your GitHub username!");
+            return false;
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "gitLink",
+        message: "Enter the GitHub link to your profile.:",
+        validate: (linkInput) => {
+          if (linkInput) {
+            return true;
+          } else {
+            console.log("Please enter your GitHub Link!");
+            return false;
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "email",
+        message:
+          "Please enter your email for others to contact you: (Required)",
+        validate: (emailInput) => {
+          if (emailInput) {
+            return true;
+          } else {
+            console.log("Please enter your email!");
+            return false;
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "title",
+        message: "What is the name of your repository? (Required)",
+        validate: (titleInput) => {
+          if (titleInput) {
+            return true;
+          } else {
+            console.log("Please enter your project name!");
+            return false;
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "about",
+        message: "Please enter some information about your project: (Required)",
+        validate: (aboutInput) => {
+          if (aboutInput) {
+            return true;
+          } else {
+            console.log("Please enter some information!");
+            return false;
+          }
+        },
+      },
+      {
+        type: "confirm",
+        name: "confirmInstall",
+        message:
+          "Does your project need special instructions on how to install?",
+        default: true,
+      },
+      {
+        type: "input",
+        name: "install",
+        message: "Enter your installation instructions:",
+        when: ({ confirmInstall }) => {
+          if (confirmInstall) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "usage",
+        message: "Please explain the usage of this project:",
+        validate: (usageInput) => {
+          if (usageInput) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
+      {
+        type: "list",
+        name: "license",
+        choices: [
+          "MIT",
+          "Apache 2.0",
+          "Creative Commons 1.0",
+          "GPLv3",
+          "WTFPL",
+        ],
+      },
+      {
+        type: "confirm",
+        name: "collab",
+        message: "Will your project have a collaborator?",
+        default: true,
+      },
+      {
+        type: "input",
+        name: "collabName",
+        message: "What is the name of your collaborator? (Required)",
+        validate: (linkInput) => {
+          if (linkInput) {
+            return true;
+          } else {
+            console.log("Please provide a GitHub link!");
+            return false;
+          }
+        },
+      },
+      {
+        type: "input",
+        name: "collabLink",
+        message: "Provide the GitHub link for your collaborator (Required)",
+        validate: (linkInput) => {
+          if (linkInput) {
+            return true;
+          } else {
+            console.log("Please provide a GitHub link!");
+            return false;
+          }
+        },
+      },
+      {
+        type: "confirm",
+        name: "confirmTest",
+        message: "Will your project need testing instructions?",
+        default: true,
+      },
+      {
+        type: "input",
+        name: "testing",
+        message: "Please input testing instructions for the user:",
+        when: ({ confirmTest }) => {
+          if (confirmTest) {
+            return true;
+          } else {
+            return false;
+          }
+        },
+      },
+    ])
+    .then((data) => {
+      return generateMarkdown(data);
+    })
+    .then((Markdown) => {
+      return writeFile(Markdown);
+    })
+    .then((writeFileResponse) => {
+      console.log(writeFileResponse);
+      return copyFile();
+    })
+    .then((copyFileResponse) => {
+      console.log(copyFileResponse);
+    })
 
-// function to write READEME  file
-const writeToFile = (data) => {
-  return new Promise((resolve, reject) => {
-    // make a readme file and add to dist folder
-    fs.writeFile("./dist/READEME.md", data, (err) => {
-      // if there is an error, reject the promise and send the error to .catch() method
-      if (err) {
-        reject(err);
-        // return out of the function here to make sure the promise doesn't continue to execute the resolve() function
-        return;
-      }
-      // if everything went well, resolve the Promise and send the successful data to the .then() method
-      resolve({
-        ok: true,
-        message: console.log(
-          'Geat work! Navigate to the "dist" folder to see your README!'
-        ),
-      });
+    .catch((err) => {
+      console.log(err);
     });
-  });
 };
+function init() {
+  promptQuestions();
+}
 
-// Initialize application
-const init = () => {
-  return inquirer.prompt(questions);
-};
-
-// Function call to initialize app
-init()
-  .then((userInput) => {
-    return generateMarkdown(userInput);
-  })
-  .then((readmeInfo) => {
-    return writeToFile(readmeInfo);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+init();
