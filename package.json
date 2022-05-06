@@ -6,6 +6,7 @@
   "dependencies": {
     "inquirer": "^7.3.3"
   },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,10 +17,7 @@
   "author": "Erik Williams",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/EPW80/Professional-README-Generator.git"
+    "url": "https://github.com/EPW80/Professional-README-Generator/issues"
   },
-  "homepage": "https://github.com/EPW80/Professional-README-Generator#readme",
-  "devDependencies": {
-    "jest": "^28.0.3"
-  }
+  "homepage": "https://github.com/EPW80/Professional-README-Generator#readme"
 }

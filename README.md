@@ -1,4 +1,4 @@
-# README Generator
+# Professional README Generator
 
 ## Navigate To:
 
@@ -27,7 +27,7 @@ With this README generator, you no longer need to create a professional README f
 - VS Code
 - GitBash
 - Node.js
-- Javascript
+
 
 ### Steps to initialize the project:
 
