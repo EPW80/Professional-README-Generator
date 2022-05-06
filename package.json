@@ -6,7 +6,6 @@
   "dependencies": {
     "inquirer": "^7.3.3"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/EPW80/Professional-README-Generator.git"
   },
-  "homepage": "https://github.com/EPW80/Professional-README-Generator#readme"
+  "homepage": "https://github.com/EPW80/Professional-README-Generator#readme",
+  "devDependencies": {
+    "jest": "^28.0.3"
+  }
 }
