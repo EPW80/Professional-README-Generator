@@ -1,7 +1,7 @@
 // TODO: Include packages needed for this application
-const { writeFile, copyFile } = require("./utils/generateFile.js");
+const { writeFile, copyFile } = require("./util/generateFile.js");
 const inquirer = require("inquirer");
-const generateMarkdown = require("./utils/generateMarkdown.js");
+const generateMarkdown = require("./util/generateMarkdown.js");
 
 // TODO: Create an array of questions for user input
 const promptQuestions = () => {
