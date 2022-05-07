@@ -1,5 +1,7 @@
 # Professional README Generator
 
+![Professional-README-Generator: Erik Williams](/assets/images/README.png)
+
 ## Navigate To:
 
 - [Description](#description)
@@ -76,7 +78,7 @@ Not sure what to input for a certain section? Follow the guidelines outlined bel
 
 ## Demonstration
 
-<!-- Watch [this demo](https://www.youtube.com/watch?v=iDUiKBdE1U8) to see the README Generator in action. -->
+Watch [this demo](https://www.youtube.com/watch?v=iDUiKBdE1U8) to see the README Generator in action.
 
 ## Questions
 
