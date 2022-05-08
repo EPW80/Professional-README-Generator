@@ -1,3 +1,4 @@
+// function declarations
 const generateInstall = (installText) => {
   if (!installText) {
     return "";
