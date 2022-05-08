@@ -13,7 +13,7 @@ const writeFile = (fileContent) => {
       // if everything went well, resolve Promise
       resolve({
         ok: true,
-        message: "Congratulations your READMe file has been created!",
+        message: "Congratulations your README file has been created!",
       });
     });
   });
